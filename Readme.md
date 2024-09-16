@@ -42,4 +42,4 @@ ON DELETE RESTRICT ON UPDATE RESTRICT;
 ## Participantes
 
 - Agustin Pereira
-- 
+- Sebastian Ulibarri
