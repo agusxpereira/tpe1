@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 15, 2024 at 01:14 AM
+-- Generation Time: Sep 16, 2024 at 08:24 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -32,6 +32,17 @@ CREATE TABLE `Biblioteca` (
   `id_libro` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Biblioteca`
+--
+
+INSERT INTO `Biblioteca` (`id_usuario`, `id_libro`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(3, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -46,6 +57,16 @@ CREATE TABLE `Libros` (
   `paginas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Libros`
+--
+
+INSERT INTO `Libros` (`id_libro`, `titulo`, `autor`, `genero`, `paginas`) VALUES
+(1, 'Titulo 1', 'autor', 'genero', 70),
+(2, 'Titulo 2', 'autor', 'genero', 80),
+(3, 'Titulo 3', 'autor', 'genero', 77),
+(4, 'Titulo 4', 'autor', 'genero', 90);
+
 -- --------------------------------------------------------
 
 --
@@ -59,6 +80,16 @@ CREATE TABLE `Puntuacion` (
   `comentario` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Puntuacion`
+--
+
+INSERT INTO `Puntuacion` (`id_usuario`, `id_libro`, `puntuacion`, `comentario`) VALUES
+(1, 1, 5, ''),
+(2, 2, 4, ''),
+(3, 1, 3, ''),
+(1, 1, 1, '');
+
 -- --------------------------------------------------------
 
 --
@@ -70,6 +101,15 @@ CREATE TABLE `Usuarios` (
   `email` varchar(150) NOT NULL,
   `password` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Usuarios`
+--
+
+INSERT INTO `Usuarios` (`id_usuario`, `email`, `password`) VALUES
+(1, 'ejemplo@user.com', 'root'),
+(2, 'ejemplo2@user.com', 'root'),
+(3, 'ejemplo3@user.com', 'root');
 
 --
 -- Indexes for dumped tables
@@ -109,13 +149,13 @@ ALTER TABLE `Usuarios`
 -- AUTO_INCREMENT for table `Libros`
 --
 ALTER TABLE `Libros`
-  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `Usuarios`
 --
 ALTER TABLE `Usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
