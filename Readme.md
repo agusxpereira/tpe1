@@ -1,5 +1,5 @@
 # TPE 1
-La idea es tener una libreria, por lo que nuestra DB va a tener Usuarios y Libros, estos libros pueden tener una puntuacion si es que pertenecen a la libreria del usuario.
+La idea es tener una libreria, por lo que nuestra DB va a tener Usuarios y Libros, y cada libro puede tener una puntuación. Ademas, el usuario va a poder guardar sus libros favoritos en una tabla llamada biblioteca.
 
 ## Diagrama
 
