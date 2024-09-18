@@ -36,12 +36,6 @@ CREATE TABLE `Biblioteca` (
 -- Dumping data for table `Biblioteca`
 --
 
-INSERT INTO `Biblioteca` (`id_usuario`, `id_libro`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(2, 1),
-(3, 2);
 
 -- --------------------------------------------------------
 
@@ -61,12 +55,6 @@ CREATE TABLE `Libros` (
 -- Dumping data for table `Libros`
 --
 
-INSERT INTO `Libros` (`id_libro`, `titulo`, `autor`, `genero`, `paginas`) VALUES
-(1, 'Titulo 1', 'autor', 'genero', 70),
-(2, 'Titulo 2', 'autor', 'genero', 80),
-(3, 'Titulo 3', 'autor', 'genero', 77),
-(4, 'Titulo 4', 'autor', 'genero', 90);
-
 -- --------------------------------------------------------
 
 --
@@ -84,12 +72,6 @@ CREATE TABLE `Puntuacion` (
 -- Dumping data for table `Puntuacion`
 --
 
-INSERT INTO `Puntuacion` (`id_usuario`, `id_libro`, `puntuacion`, `comentario`) VALUES
-(1, 1, 5, ''),
-(2, 2, 4, ''),
-(3, 1, 3, ''),
-(1, 1, 1, '');
-
 -- --------------------------------------------------------
 
 --
@@ -105,11 +87,6 @@ CREATE TABLE `Usuarios` (
 --
 -- Dumping data for table `Usuarios`
 --
-
-INSERT INTO `Usuarios` (`id_usuario`, `email`, `password`) VALUES
-(1, 'ejemplo@user.com', 'root'),
-(2, 'ejemplo2@user.com', 'root'),
-(3, 'ejemplo3@user.com', 'root');
 
 --
 -- Indexes for dumped tables
@@ -144,18 +121,49 @@ ALTER TABLE `Usuarios`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `Libros`
---
 ALTER TABLE `Libros`
-  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `Usuarios`
 --
 ALTER TABLE `Usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+### Insertar datos en la tabla Usuarios:
+
+INSERT INTO Usuarios (email, password) VALUES
+( 'user1@Gmail.com', 'password1'),
+( 'user2@Gmail.com', 'password2'),
+( 'user3@Gmail.com', 'password3');
+
+### Insertar datos en la tabla Libros:
+
+INSERT INTO Libros ( titulo, autor, genero, paginas) VALUES
+( 'Cien años de soledad', 'Gabriel García Márquez', 'Realismo mágico', 417),
+( 'Don Quijote de la Mancha', 'Miguel de Cervantes', 'Novela', 863),
+( '1984', 'George Orwell', 'Distopía', 328),
+( 'Orgullo y prejuicio', 'Jane Austen', 'Romántico', 432);
+
+### Insertar datos en la tabla Biblioteca:
+
+INSERT INTO Biblioteca (id_usuario, id_libro) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(3, 4),
+(2, 1);
+### Insertar datos en la tabla Puntuacion:
+
+INSERT INTO Puntuacion (id_usuario, id_libro, puntuacion, comentario) VALUES
+(1, 1, 4.5, 'Gran obra, me encantó la historia'),
+(1, 2, 4.0, 'Una lectura clásica, aunque un poco larga'),
+(2, 3, 5.0, 'Muy impactante, excelente crítica social'),
+(3, 4, 4.8, 'Un clásico romántico lleno de emociones'),
+(2, 1, 4.2, 'Una obra fascinante con muchos detalles');
+--
+-- AUTO_INCREMENT for table `Libros`
+--
 
 --
 -- Constraints for dumped tables
