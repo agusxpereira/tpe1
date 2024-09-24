@@ -31,8 +31,7 @@ CREATE TABLE if not exists  `Libros` (
 ) ;
 
 ALTER TABLE `Libros`
-  ADD CONSTRAINT `fk_Generos_Libros` FOREIGN KEY (`id_Genero`) REFERENCES `Generos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-  
+  ADD CONSTRAINT `fk_Generos_Libros` FOREIGN KEY (`id_Genero`) REFERENCES `Generos` (`id`); 
 
 
 INSERT INTO Libros ( titulo, autor, id_genero, paginas) VALUES
