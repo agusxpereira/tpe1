@@ -13,7 +13,8 @@ INSERT INTO `Usuarios` (Usuario,password) VALUES
 CREATE TABLE if not exists `Generos` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `Nombre` varchar(150) NOT NULL,
-  `Descripcion` varchar(255) NOT NULL
+  `Descripcion` varchar(255) NOT NULL,
+  `Ruta_Imagen` varchar(255)
 ) ;
 
 INSERT INTO `Generos` (Nombre, Descripcion) VALUES 
@@ -31,8 +32,7 @@ CREATE TABLE if not exists  `Libros` (
 ) ;
 
 ALTER TABLE `Libros`
-  ADD CONSTRAINT `fk_Generos_Libros` FOREIGN KEY (`id_Genero`) REFERENCES `Generos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-  
+  ADD CONSTRAINT `fk_Generos_Libros` FOREIGN KEY (`id_Genero`) REFERENCES `Generos` (`id`); 
 
 
 INSERT INTO Libros ( titulo, autor, id_genero, paginas) VALUES
@@ -40,4 +40,3 @@ INSERT INTO Libros ( titulo, autor, id_genero, paginas) VALUES
 ( 'Don Quijote de la Mancha', 'Miguel de Cervantes', 2, 863),
 ( '1984', 'George Orwell', 3, 328),
 ( 'Orgullo y prejuicio', 'Jane Austen', 4, 432);
-
