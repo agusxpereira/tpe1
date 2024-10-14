@@ -1,0 +1,30 @@
+
+.container-detail{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px black;
+    background-color: #fff1f1;
+}
+.det-actions> button {
+    margin: 10px;
+    background: none;
+    border-radius: 3px;
+}
+#img-det{
+    border-radius: 100px;
+    width: fit-content;
+    image-rendering: auto;
+    max-height: 205px;
+    margin-left: 25%;
+}
+.container-flex-column{
+    border: 1px solid black;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

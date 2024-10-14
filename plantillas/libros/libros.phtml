@@ -1,0 +1,35 @@
+<?php require_once("./plantillas/layout/header.phtml") ?>
+<div class="row gap-3">
+
+    <?php if($this->user): ?>
+        <button><a href="<?= BASE_URL ?>agregar/libro">Agregar</a></button>
+    <?php endif ?>
+    <?php foreach ($libros as $libro): ?>
+    
+        <div class="card" style="width: 10rem;">
+            <div class="img-container">
+                <img src="https://picsum.photos/70/" class="card-img-top">
+            </div>
+            <div class="card-body">
+    
+                <h5 class="card-title">
+                    <?= $libro->titulo ?>
+                </h5>
+                <p class="card-text">
+                    <?= $libro->autor ?>
+                </p>
+                <p class="card-text"><a href="<?=BASE_URL?>listar/<?=$libro->id_libro?>">Ver detalles</a></p>
+    
+                <?php if($this->user): ?>
+                    <p><a href="<?=BASE_URL?>eliminar/<?=$libro->id_libro?>">Eliminar</a></p>
+                    <p><a href="<?=BASE_URL?>editar/<?=$libro->id_libro?>">Editar</a></p>
+                <?php endif ?>
+    
+            </div>
+    
+        </div>
+    
+    <?php endforeach ?>
+
+</div>
+<?php require_once './plantillas/layout/footer.phtml' ?>

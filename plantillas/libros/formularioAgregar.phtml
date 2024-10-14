@@ -1,0 +1,28 @@
+<?php require_once './plantillas/layout/header.phtml'?>
+
+<?php if($mensaje != null): ?>
+<p><?=$mensaje?></p>
+<?php endif ?>
+
+<form action="aggLibro" method="post">
+
+    <div class="mb-3"><input type="text" name="titulo" placeholder="titulo"></div>
+
+    
+    <div class="mb-3">    
+        <input type="text" name="autor" placeholder="autor">
+    </div>
+    <input type="text" name="genero" placeholder="nombre de genero">
+    <div class="mb-3">
+        <input type="number" name="paginas" placeholder="cantidad de páginas">
+    </div>
+    <div class="mb-3">
+        <input type="text" name="cover" placeholder="(opcional) imagen">
+        
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar</button>
+</form>
+
+
+<?php require_once './plantillas/layout/footer.phtml'?>
+

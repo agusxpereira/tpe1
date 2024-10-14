@@ -1,0 +1,24 @@
+
+<?php require_once './plantillas/layout/header.phtml' ?>
+
+<div class="card" style="width: 18rem;">
+    <div class="img-container">
+        <img src="<?= $libro->cover ?>" class="card-img-top">
+        </div>
+        <div class="card-body">
+        
+            <h5 class="card-title">
+                <?= $libro->titulo ?>
+            </h5>
+            <p class="card-text">
+                <?= $libro->autor ?>
+            </p>
+            
+            <?php if($this->user): ?>
+                <p><a href="<?=BASE_URL?>eliminar/<?=$libro->id_libro?>">Eliminar</a></p>
+                <p><a href="<?=BASE_URL?>editar/<?=$libro->id_libro?>">Editar</a></p>
+            <?php endif ?>   
+        
+        </div>
+
+<?php require_once './plantillas/layout/footer.phtml' ?>
