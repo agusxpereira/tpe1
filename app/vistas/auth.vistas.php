@@ -7,7 +7,7 @@ class AuthVista{
         $this->user = $user;
     }
     //el error por defecto está vacío
-    public function showLogin($error = ''){
+    public function showLogin($mensaje = ''){
         require_once("./plantillas/auth/form_login.phtml");
     }
     

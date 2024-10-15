@@ -6,9 +6,9 @@ class GenerosControlador {
     private $modelo;
     private $vista;
     //Revisado
-    public function __construct() {
+    public function __construct($res) {
         $this->modelo = new GenerosModelo();
-        $this->vista = new GenerosVista();
+        $this->vista = new GenerosVista($res->user);
     }
     //revisado
     public function mostrarGeneros() {

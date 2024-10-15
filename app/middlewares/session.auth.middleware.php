@@ -9,13 +9,6 @@
             $res->user->id = $_SESSION['USER_ID'];
             $res->user->email = $_SESSION['USER'];
             return;
-        }else{
-            session_start();
-            //header('Location: ' . BASE_URL . 'login');
-            /* var_dump($res);
-            echo "hay que iniciar sesion"; */
-            die();
-            //debemos cortar la ejecucion de cualquier código que me invoque
         }
     }
 ?>

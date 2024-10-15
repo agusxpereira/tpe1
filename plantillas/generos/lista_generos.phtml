@@ -1,4 +1,4 @@
-<?php require 'templates/layout/header.phtml' ?>
+<?php require 'plantillas/layout/header.phtml' ?>
 
 
 <ul class="list-group">
@@ -9,7 +9,7 @@
 <p class="mt-3"><small>Mostrando <?=$count?> generos</small></p>
 
 
-<?php //if($this->user): ?>
-        <button><a href="agregar/genero">Agregar</a></button>
-    <?php //endif ?>
-<?php require 'templates/layout/footer.phtml' ?>
+<?php if($this->user): ?>
+        <button><a href="agregar/genero" class='btn btn-success btn-sm ml-auto'>Agregar</a></button>
+    <?php endif ?>
+<?php require 'plantillas/layout/footer.phtml' ?>

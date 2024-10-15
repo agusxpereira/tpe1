@@ -1,9 +1,7 @@
 <?php require_once("./plantillas/layout/header.phtml") ?>
 <div class="row gap-3">
 
-    <?php if($this->user): ?>
-        <button><a href="<?= BASE_URL ?>agregar/libro">Agregar</a></button>
-    <?php endif ?>
+
     <?php foreach ($libros as $libro): ?>
     
         <div class="card" style="width: 10rem;">
@@ -18,7 +16,7 @@
                 <p class="card-text">
                     <?= $libro->autor ?>
                 </p>
-                <p class="card-text"><a href="<?=BASE_URL?>listar/<?=$libro->id_libro?>">Ver detalles</a></p>
+                <p class="card-text"><a href="<?=BASE_URL?>listar/libros/<?=$libro->id_libro?>">Ver detalles</a></p>
     
                 <?php if($this->user): ?>
                     <p><a href="<?=BASE_URL?>eliminar/<?=$libro->id_libro?>">Eliminar</a></p>
@@ -30,6 +28,10 @@
         </div>
     
     <?php endforeach ?>
+
+    <?php if($this->user): ?>
+        <button><a href="agregar/libro">Agregar</a></button>
+    <?php endif ?>
 
 </div>
 <?php require_once './plantillas/layout/footer.phtml' ?>

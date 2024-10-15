@@ -14,25 +14,26 @@ class AuthController {
         
     }
 
-    public function showLogin($mensaje = ''){
+    public function showLogin($mensaje = null){
         return $this->vista->showLogin($mensaje);
     }
 
 
     public function login(){
-        if(!isset($_POST['email']) || empty($_POST['email'])){
+        if(!isset($_POST['nombre']) || empty($_POST['nombre'])){
             return $this->vista->showLogin('Falta completar el nombre de usuario');
         }
         if(!isset($_POST['password']) || empty($_POST['password'])){
             return $this->vista->showLogin('Falta completar la contraseña del usuario');
         }
 
-        $email = $_POST['email'];
+        $nombre = $_POST['nombre'];
         $password = $_POST['password'];
 
-        $userDB = $this->modelo->getUserByEmail($email);
+        $userDB = $this->modelo->getUserBynombre($nombre);
+        var_dump($userDB);
         
-        if($userDB && ($password == $userDB->password)){
+        if($userDB && ( password_verify($password,$userDB->password))){
             
             //Si el usuario existe y las contraseñas coinciden
             session_start();
@@ -44,5 +45,10 @@ class AuthController {
         }else{
             return $this->vista->showLogin('Credenciales incorrectas');
         }
+    }
+    public function logout() {
+        session_start(); // Va a buscar la cookie
+        session_destroy(); // Borra la cookie que se buscó
+        header('Location: ' . BASE_URL);
     }
 }
