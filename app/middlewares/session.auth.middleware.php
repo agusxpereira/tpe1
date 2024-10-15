@@ -11,7 +11,7 @@
             return;
         }else{
             session_start();
-            header('Location: ' . BASE_URL . 'login');
+            //header('Location: ' . BASE_URL . 'login');
             /* var_dump($res);
             echo "hay que iniciar sesion"; */
             die();

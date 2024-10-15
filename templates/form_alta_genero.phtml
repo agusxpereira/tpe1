@@ -1,0 +1,25 @@
+<!-- formulario de alta de genero -->
+<form action="<?= ($genero<> null)? "editar/genero/$genero->id": 'nuevoGenero'?>" method="POST" class="my-4" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-9">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input required name="nombre" type="text" class="form-control" value = "<?php if($genero<> null) echo $genero->nombre ?>">
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="form-group">
+                <label for="fotos"> <?= ($genero<> null && $genero->ruta_imagen <> null )? 'Cambiar': 'Seleccionar'?> Imagen</label>
+            <input type="file" name="foto" id="fotos" accept=".png, .jpg, .jpeg">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Descripcion</label>
+        <textarea name="descripcion" class="form-control" rows="3" ><?php if($genero<> null) echo $genero->descripcion ?></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+</form>
