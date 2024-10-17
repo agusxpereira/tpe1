@@ -2,7 +2,8 @@
 
 <?php if ($genero->ruta_imagen <> null) : ?> <img src="<?= $genero->ruta_imagen ?>" alt=""> <?php endif ?>
 
-<h1> <?= $genero->nombre ?> > </h1>
+<h1> <?= $genero->nombre ?> </h1>
+<h4> <?= $genero->descripcion ?> </h4>
 <?php if ($this->user): ?>
     <a href="datosGenero/<?= $genero->id ?>" type="button" class='btn btn-success btn-sm ml-auto'>editar</a>
     <a href="eliminar/genero/<?= $genero->id ?>" type="button" class='btn btn-danger btn-sm ml-auto'>Borrar</a>
@@ -11,7 +12,6 @@
     <?php foreach ($libros as $libro): ?>
         <a href="listar/libros/<?= $libro->id_libro ?>">
             <li> <?= $libro->titulo ?> </li>
-            <li> <?= $libro->descripcion ?> </li>
         </a>
     <?php endforeach ?>
 

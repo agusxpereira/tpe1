@@ -1,11 +1,6 @@
 <?php
-
-class LibrosModelo{
-    private $db;
-    function __construct(){
-        $this->db = new PDO('mysql:host=localhost;'.'dbname=DB_TPE;harset=utf8', 'root', '');
-    }
-
+require_once 'Modelo.base.php';
+class LibrosModelo extends ModeloBase{
     public function getLibros(){
         $query = $this->db->prepare("SELECT * FROM Libros");
         $query->execute();

@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS db_tpe;
-USE db_tpe;
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_usuario` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,

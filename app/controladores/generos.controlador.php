@@ -24,7 +24,7 @@ class GenerosControlador {
         $genero = $this->modelo->obtenerGenero($id);
         //obtiene los libros pertencientes a el genero.
         $libros = $this->modelo->obtenerLibros($id);
-
+        var_dump($libros);
         // mando los géneros a la vista
         return $this->vista->detalleGenero($genero,$libros);
     }
@@ -98,8 +98,12 @@ class GenerosControlador {
             return $this->vista->mostrarError("No existe el género con el id=$id");
         }
         var_dump($_POST);
-        $ruta = $genero->Ruta_Imagen;
-        if (isset( $_FILES['foto']) && isset( $_FILES['foto']['name'])){
+        var_dump($genero);
+        $ruta = $genero->ruta_imagen;
+        var_dump($ruta);
+
+        if (isset( $_FILES['foto']) && !empty( $_FILES['foto']['name'])){
+            echo "<br>files<br>";
             var_dump($_FILES);
 
             $ruta = $this->procesarImagen();

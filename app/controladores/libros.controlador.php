@@ -64,7 +64,6 @@ class LibrosControlador{
             return;
         }
         
-        var_dump($_POST['titulo']);
         if(isset($_POST['titulo']) && isset($_POST['autor'])&& isset($_POST['genero']) && isset($_POST['paginas'])){
             $titulo = $_POST['titulo'];
             $autor = $_POST['autor'];
