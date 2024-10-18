@@ -5,7 +5,7 @@ class ModeloBase{
     public function __construct() {
         require_once 'config.php';
 
-        try {
+        // try {
             // Conectar al servidor de base de datos
             $this->db = new PDO("mysql:host=" . MYSQL_HOST . ";charset=utf8", MYSQL_USER, MYSQL_PASS);
 
@@ -18,13 +18,13 @@ class ModeloBase{
             $this->db->exec("USE " . MYSQL_DB);
 
             $this->_deploy();
-        } catch (PDOException $e) {
+        // } catch (PDOException $e) {
             /* 
             
             header("Location:" . BASE_URL . '/mostrarError'); 
         
             */
-        }
+        // }
     }
 
     private function _deploy()

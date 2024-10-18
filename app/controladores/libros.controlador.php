@@ -10,10 +10,20 @@ class LibrosControlador{
 
     public function __construct($res)
     {
-        $this->modelo = new LibrosModelo();
+
         $this->vista = new LibrosVista($res->user);
         //a la vista le pasamos el usuario que tenemos en response, si no existe es null
-    }
+        
+        try {
+            $this->modelo = new LibrosModelo();
+        }
+        catch (PDOException $e){
+            var_dump($e);
+            $this->vista->mensajeError("No se pudo conectar a la base de datos; error $e");
+            die();
+        }
+        }
+    
     
     function listarLibros(){
         
@@ -47,13 +57,12 @@ class LibrosControlador{
             $autor = $_POST['autor'];
             $genero = $_POST['genero'];
             $paginas = intval($_POST['paginas']);
-            $cover = $_POST['cover'];
-            
+            $cover = empty($_POST['cover']) ? null :  $_POST['cover'];
             $id = $this->modelo->agregarLibro($titulo, $autor, $genero, $paginas, $cover);
             if ($id>0)
-                return $this->mostrarAgregar("La tarea $id se insertó con éxito");
+                return $this->mostrarAgregar("El libro $id se insertó con éxito");
             else
-                return $this->vista->mensajeError("La tarea $id no se pudo insertar");
+                return $this->vista->mensajeError("El libro $id no se pudo insertar");
                 die();
         }
 

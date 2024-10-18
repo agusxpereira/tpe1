@@ -114,7 +114,7 @@ class GenerosControlador
         $ruta = $genero->ruta_imagen;
 
         if (isset($_FILES['foto']) && !empty($_FILES['foto']['name'])) {
-            echo "<br>files<br>";
+            //BORRAR LA FOTO;
 
             $ruta = $this->procesarImagen();
         }
