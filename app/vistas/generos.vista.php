@@ -22,8 +22,8 @@ class generosVista {
         require 'plantillas/generos/detalle_genero.phtml';
     }
 
-    public function mostrarError($error) {
-        require 'plantillas/generos/error.phtml';
+    public function mostrarError($mensaje) {
+        require 'plantillas/error/error.phtml';
     }
 
     public function mostrarFormularioCarga($genero){

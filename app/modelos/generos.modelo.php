@@ -44,19 +44,23 @@ class GenerosModelo extends ModeloBase
 
     public function insertarGenero($nombre, $descripcion, $ruta_imagen)
     {
+        try {
+            $query = $this->db->prepare('INSERT INTO generos(nombre, descripcion, Ruta_imagen) VALUES (?, ?, ?)');
 
-        $query = $this->db->prepare('INSERT INTO generos(nombre, descripcion, Ruta_imagen) VALUES (?, ?, ?)');
+            $query->execute([$nombre, $descripcion, $ruta_imagen]);
 
-        $query->execute([$nombre, $descripcion, $ruta_imagen]);
-
-        $id = $this->db->lastInsertId();
+            $id = $this->db->lastInsertId();
+        } catch (Throwable $th) {
+            $id = -1;
+        }
 
         return $id;
     }
 
+
     public function borrarGenero($id)
     {
-
+    
         $libros = $this->obtenerLibros($id);
 
         if (empty($libros)) {
@@ -87,6 +91,4 @@ class GenerosModelo extends ModeloBase
 
         $query->execute([$nombre, $descripcion, $ruta_imagen, $id]);
     }
-
-    
 }

@@ -89,6 +89,7 @@ class LibrosModelo extends ModeloBase{
         $query->execute([$id]);
 
         $validacion = $query->rowCount();
+        
         return $validacion;
     
     }

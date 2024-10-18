@@ -6,6 +6,7 @@ require_once("./app/vistas/libros.vistas.php");
 
 class LibrosControlador{
     private $modelo;
+
     private $vista;
 
     public function __construct($res)
@@ -18,7 +19,7 @@ class LibrosControlador{
             $this->modelo = new LibrosModelo();
         }
         catch (PDOException $e){
-            var_dump($e);
+            var_dump($e["message"]);
             $this->vista->mensajeError("No se pudo conectar a la base de datos; error $e");
             die();
         }

@@ -41,7 +41,7 @@ class GenerosControlador
     {
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
             $fileType = $_FILES['foto']['type'];
-            if (($fileType == "image/jpg" || $fileType == "image/jpeg" || $fileType == "image/png" )) {
+            if (($fileType == "image/jpg" || $fileType == "image/jpeg" || $fileType == "image/png")) {
 
 
                 $archivo = $_FILES['foto']['name'];
@@ -65,16 +65,20 @@ class GenerosControlador
             return $this->vista->mostrarError('Falta completar el título');
         }
 
-        $ruta = $this->procesarImagen();
+        if (isset($_FILES['foto']) && !empty($_FILES['foto']['name'])) {
+            $ruta = $this->procesarImagen();
+        }
 
         $nombre = $_POST['nombre'];
         $descripcion = $_POST['descripcion'] ?? null;
         $ruta_imagen =  $ruta;
 
         $id = $this->modelo->insertarGenero($nombre, $descripcion, $ruta_imagen);
-
-        // redirijo al home (también podríamos usar un método de una vista para mostrar un mensaje de éxito)
-        header('Location: ' . BASE_URL);
+        if ($id>0)
+            return $this->mostrarGenero($id);
+        else
+            return $this->vista->mostrarError("El genero $nombre no se pudo insertar.");
+            die();
     }
 
     public function borrarGenero($id)
@@ -87,9 +91,10 @@ class GenerosControlador
         }
 
         // borro el género y redirijo
-        $this->modelo->borrarGenero($id);
+        if($this->modelo->borrarGenero($id)){
+            $this->mostrarGeneros();
+        } else $this->vista->mostrarError("No se pudo borrar el genero $genero->nombre por que tiene elementos relacionados.");;
 
-        header('Location: ' . BASE_URL . "generos");
     }
     public function datosGenero($id)
     {
@@ -114,8 +119,7 @@ class GenerosControlador
         $ruta = $genero->ruta_imagen;
 
         if (isset($_FILES['foto']) && !empty($_FILES['foto']['name'])) {
-            //BORRAR LA FOTO;
-
+            unlink($genero->Ruta_Imagen);
             $ruta = $this->procesarImagen();
         }
 
