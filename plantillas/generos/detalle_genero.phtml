@@ -1,16 +1,16 @@
 <?php require 'plantillas/layout/header.phtml' ?>
 
-<?php if ($genero->ruta_imagen <> null) : ?> <img src="<?= $genero->ruta_imagen ?>" alt=""> <?php endif ?>
+<?php if ($genero->ruta_imagen <> null) : ?> <img class="img-genero" src="<?= $genero->ruta_imagen ?>" alt=""> <?php endif ?>
 
 <h1> <?= $genero->nombre ?> </h1>
 <h4> <?= $genero->descripcion ?> </h4>
 <?php if ($this->user): ?>
     <a href="datosGenero/<?= $genero->id ?>" type="button" class='btn btn-success btn-sm ml-auto'>editar</a>
-    <a href="eliminar/genero/<?= $genero->id ?>" type="button" class='btn btn-danger btn-sm ml-auto'>Borrar</a>
+    <a href="eliminarGenero/<?= $genero->id ?>" type="button" class='btn btn-danger btn-sm ml-auto'>Borrar</a>
 <?php endif ?>
 <ul class="list-group">
     <?php foreach ($libros as $libro): ?>
-        <a href="listar/libros/<?= $libro->id_libro ?>">
+        <a href="libros/<?= $libro->id_libro ?>">
             <li> <?= $libro->titulo ?> </li>
         </a>
     <?php endforeach ?>

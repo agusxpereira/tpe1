@@ -18,9 +18,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 $params = explode("/", $action);
 $res = new Response();
 switch ($params[0]) {
-    /* Credenciales*/
+        /* Credenciales*/
     case 'showLogin':
-        
         $controller = new AuthController($res);
         $controller->showLogin();
         break;
@@ -29,25 +28,23 @@ switch ($params[0]) {
         $controller->login();
         break;
     case 'validar':
-        
         $controlador = new AuthController($res);
         $controlador->login();
         sessionAuthMiddleware($res);
-        
         break;
     case 'logout':
         $controlador = new AuthController($res);
         $controlador->logout();
         break;
-    
-//Libros
+
+        //Libros
     case 'agregarLibro':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
-        
+
         $controlador = new LibrosControlador($res);
         $controlador->mostrarAgregar();
-        
+
         break;
     case 'confirmarAgregar':
         //esto lo tengo que editar para que funcione como el editar, que lo haga todo en /agregar/libro
@@ -55,26 +52,26 @@ switch ($params[0]) {
         verifyAuthMiddleware($res);
         $controlador = new LibrosControlador($res);
         $controlador->agregarLibro();
-        
+
         break;
     case 'editarLibro':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
-        
+
         $controller = new LibrosControlador($res);
         if (isset($params[1])) {
             $id_libro = $params[1];
             $controller->mostrarEditar($id_libro);
-        } 
+        }
 
         break;
     case 'validarEditar':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
         $controller = new LibrosControlador($res);
-        if($params[1])        
+        if ($params[1])
             $controller->editarLibro($params[1]);
-        
+
         break;
     case 'eliminarLibro':
         sessionAuthMiddleware($res);
@@ -83,13 +80,11 @@ switch ($params[0]) {
         if (isset($params[1])) {
             $id_libro = intval($params[1]);
             $controller->eliminarLibro($id_libro);
-        } 
-        break;    
-    
+        }
+        break;
     case 'libros':
-        
         sessionAuthMiddleware($res);
-        verifyAuthMiddleware($res);
+        //verifyAuthMiddleware($res);
         if (isset($params[1])) {
             $id = $params[1];
             $controlador = new LibrosControlador($res); // $res
@@ -97,11 +92,16 @@ switch ($params[0]) {
         } else {
             $controlador = new LibrosControlador($res); // $res
             $controlador->listarLibros();
-            
         }
         break;
-    
-//Generos
+
+        //Generos
+    case 'agregarGenero':
+        sessionAuthMiddleware($res);
+        verifyAuthMiddleware($res);
+        $controller = new GenerosControlador($res);
+        $controller->mostrarFormularioCarga();
+        break;
     case 'nuevoGenero':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
@@ -114,31 +114,24 @@ switch ($params[0]) {
         $controller = new GenerosControlador($res);
         $controller->datosGenero($params[1]);
         break;
-    
     case 'editarGenero':
         $controller = new GenerosControlador($res);
         $controller->editarGenero($params[1]);
         break;
-    
-    case 'eliminarCateogira':
+    case 'eliminarGenero':
         $controller = new GenerosControlador($res);
         $controller->borrarGenero($params[1]);
-        break;        
-    case 'listar':
+        break;
+    case "generos":
         sessionAuthMiddleware($res);
-        if ($params[1] == "generos") {
-            $controlador = new GenerosControlador($res);
-            if (isset($params[2]) && !empty($params[2])) {
-                $controlador->mostrarGenero($params[2]);
-            } else {
-                $controlador->mostrarGeneros();
-            }
+        $controlador = new GenerosControlador($res);
+        if (isset($params[1]) && !empty($params[1])) {
+            $controlador->mostrarGenero($params[1]);
+        } else {
+            $controlador->mostrarGeneros();
         }
         break;
-        
-
     default:
-    # code...
-    break;
+        # code...
+        break;
 }
-
