@@ -16,18 +16,18 @@ class LibrosVista{
     }
 
 
-    function showDetail($libro){
+    function showDetail($libro, $genero){
         require_once("./plantillas/libros/libro_detail.phtml");
     }
 
-    function mostrarAgregar(){
+    function mostrarAgregar($mensaje, $listaGeneros){
         return require_once("./plantillas/libros/formularioAgregar.phtml");
     }
 
-    function editarLibroForm($mensaje=null, $id, $libro, $genero){
+    function mostrarFormEditar($mensaje=null, $libro, $listaGeneros){
         return require_once("./plantillas/libros/formularioEditar.phtml");
     }
-    public function mensajeError($mensaje){
+    public function mensajeError($mensaje = 'No se pudo inicializar la base de datos'){
         require_once("./plantillas/libros/mensajeError.phtml");
     }
 

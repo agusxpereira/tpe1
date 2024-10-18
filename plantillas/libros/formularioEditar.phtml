@@ -1,11 +1,11 @@
 <?php require_once './plantillas/layout/header.phtml'?>
 <?php if($mensaje != null): ?>
-<p><?=$mensaje?></p>
+<p class="alert"><?=$mensaje?></p>
 <?php endif ?>
 
 
 
-<form action="<?= BASE_URL ?>editar/<?= $id ?>" method="post">
+<form action="validarEditar/<?= $libro->id_libro ?>" method="post">
 
     <div class="mb-3">
         <input type="text" name="titulo" placeholder="titulo" value="<?= $libro->titulo?>">
@@ -15,7 +15,14 @@
     <div class="mb-3">    
         <input type="text" name="autor" placeholder="autor" value="<?= $libro->autor?>">
     </div>
-    <input type="text" name="genero" placeholder="nombre de genero" value="<?= $genero ?>">
+    <div class="mb-3">    
+        <select name="genero" id="genero">
+        <?php foreach($listaGeneros as $genero):?>
+            <option value="<?=$genero->nombre?>"><?= $genero->nombre ?></option>
+        <?php endforeach?>
+        </select>
+    </div>
+    
     <div class="mb-3">
         <input type="number" name="paginas" placeholder="cantidad de páginas" value="<?= $libro->paginas?>">
     </div>
@@ -23,7 +30,7 @@
         <input type="text" name="cover" placeholder="(opcional) imagen" value="<?= $libro->cover?>">
         
     </div>
-    <button type="submit" class="btn btn-primary">Agregar</button>
+    <button type="submit" class="btn btn-primary">Editar</button>
 </form>
 
 

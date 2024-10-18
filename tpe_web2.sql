@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `libros` (
   `titulo` varchar(150) NOT NULL,
   `autor` varchar(100) NOT NULL,
   `paginas` int(11) NOT NULL,
+  `cover` VARCHAR(255) NULL,
   `id_genero` int(11) NOT NULL
 );
 

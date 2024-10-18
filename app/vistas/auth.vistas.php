@@ -10,5 +10,7 @@ class AuthVista{
     public function showLogin($mensaje = ''){
         require_once("./plantillas/auth/form_login.phtml");
     }
-    
+    public function mensajeError($mensaje = null){
+        require_once("./plantillas/error/error.phtml");
+    }
 }

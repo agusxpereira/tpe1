@@ -6,7 +6,7 @@
     
         <div class="card" style="width: 10rem;">
             <div class="img-container">
-                <img src="https://picsum.photos/70/" class="card-img-top">
+                <img src="https://media.gettyimages.com/id/1901759032/es/vector/fuentes-educativas-dise%C3%B1o-universal-de-icono-de-l%C3%ADnea-simple-con-trazo-editable-adecuado.jpg?s=612x612&w=gi&k=20&c=WI_mWRXBCcNFhf7M4HFQt_lNs_YjxptyVFQHVlRwb-k=" class="card-img-top">
             </div>
             <div class="card-body">
     
@@ -16,11 +16,11 @@
                 <p class="card-text">
                     <?= $libro->autor ?>
                 </p>
-                <p class="card-text"><a href="<?=BASE_URL?>listar/libros/<?=$libro->id_libro?>">Ver detalles</a></p>
+                <p class="card-text"><a href="libros/<?=$libro->id_libro?>">Ver detalles</a></p>
     
                 <?php if($this->user): ?>
-                    <p><a href="<?=BASE_URL?>eliminar/<?=$libro->id_libro?>">Eliminar</a></p>
-                    <p><a href="<?=BASE_URL?>editar/<?=$libro->id_libro?>">Editar</a></p>
+                    <p><a href="eliminarLibro/<?=$libro->id_libro?>">Eliminar</a></p>
+                    <p><a href="editarLibro/<?=$libro->id_libro?>">Editar</a></p>
                 <?php endif ?>
     
             </div>
@@ -30,7 +30,7 @@
     <?php endforeach ?>
 
     <?php if($this->user): ?>
-        <button><a href="agregar/libro">Agregar</a></button>
+        <button><a href="agregarLibro">Agregar</a></button>
     <?php endif ?>
 
 </div>

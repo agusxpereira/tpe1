@@ -2,9 +2,16 @@
 <?php require_once './plantillas/layout/header.phtml' ?>
 
 <div class="card" style="width: 18rem;">
-    <div class="img-container">
-        <img src="<?= $libro->cover ?>" class="card-img-top">
+    <?php if($libro->cover != ""):?>
+        <div class="img-container">
+            <img src="<?= $libro->cover ?>" class="card-img-top">
         </div>
+    <?php endif?>
+    <?php if($libro->cover == ""):?>
+        <div class="img-container">
+            <img src="https://media.gettyimages.com/id/1901759032/es/vector/fuentes-educativas-dise%C3%B1o-universal-de-icono-de-l%C3%ADnea-simple-con-trazo-editable-adecuado.jpg?s=612x612&w=gi&k=20&c=WI_mWRXBCcNFhf7M4HFQt_lNs_YjxptyVFQHVlRwb-k=" class="card-img-top">
+        </div>
+    <?php endif?>
         <div class="card-body">
         
             <h5 class="card-title">
@@ -13,10 +20,13 @@
             <p class="card-text">
                 <?= $libro->autor ?>
             </p>
+            <p class="card-text">
+                <?= $genero ?>
+            </p>
             
             <?php if($this->user): ?>
-                <p><a href="<?=BASE_URL?>eliminar/<?=$libro->id_libro?>">Eliminar</a></p>
-                <p><a href="<?=BASE_URL?>editar/<?=$libro->id_libro?>">Editar</a></p>
+                <p><a href="eliminarLibro/<?=$libro->id_libro?>">Eliminar</a></p>
+                <p><a href="editarLibro/<?=$libro->id_libro?>">Editar</a></p>
             <?php endif ?>   
         
         </div>

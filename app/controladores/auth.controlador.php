@@ -21,29 +21,28 @@ class AuthController {
 
     public function login(){
         if(!isset($_POST['nombre']) || empty($_POST['nombre'])){
-            return $this->vista->showLogin('Falta completar el nombre de usuario');
+            return $this->vista->mensajeError('Falta completar el nombre de usuario');
         }
         if(!isset($_POST['password']) || empty($_POST['password'])){
-            return $this->vista->showLogin('Falta completar la contraseña del usuario');
+            return $this->vista->mensajeError('Falta completar la contraseña del usuario');
         }
 
+       
         $nombre = $_POST['nombre'];
         $password = $_POST['password'];
 
         $userDB = $this->modelo->getUserBynombre($nombre);
-        var_dump($userDB);
-        
         if($userDB && ( password_verify($password,$userDB->password))){
             
-            //Si el usuario existe y las contraseñas coinciden
+            
             session_start();
             //iniciamos la sesion
             $_SESSION['USER_ID'] = $userDB->id_usuario; 
-            $_SESSION['USER'] = $userDB->Usuario;
+            $_SESSION['USER'] = $userDB->usuario;
             /* aca me daba un error por que los campos de userDB */
             header('Location: ' . BASE_URL);
         }else{
-            return $this->vista->showLogin('Credenciales incorrectas');
+            return $this->vista->mensajeError('Credenciales incorrectas');
         }
     }
     public function logout() {
