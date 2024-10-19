@@ -2,5 +2,5 @@
 const MYSQL_HOST = 'localhost';
 const MYSQL_USER = 'root';
 const MYSQL_PASS = '';
-const MYSQL_DB = 'BibiotecaBases1';
+const MYSQL_DB = 'BD_Biblioteca_Grupo_99';
 ?>
