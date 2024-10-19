@@ -58,11 +58,19 @@ class LibrosControlador{
 
     function agregarLibro(){
 
-        if(isset($_POST['titulo']) && isset($_POST['autor'])&& isset($_POST['genero']) && isset($_POST['paginas'])){
+        if(
+            (isset($_POST['titulo'])   && !empty($_POST['titulo']))&&
+            (isset($_POST['autor'])   && !empty($_POST['autor'])) &&
+            (isset($_POST['genero'])  && !empty($_POST['genero']))&& 
+            (isset($_POST['paginas']) && !empty($_POST['paginas']))
+          ){     
+            
             $titulo = $_POST['titulo'];
             $autor = $_POST['autor'];
             $genero = $_POST['genero'];
-            $paginas = intval($_POST['paginas']);
+            $paginas = $_POST['paginas'];
+            
+            
             $cover = empty($_POST['cover']) ? null :  $_POST['cover'];
             
             $genero_id = $this->modeloGeneros->obtenerId($genero);
@@ -79,7 +87,6 @@ class LibrosControlador{
                 return $this->vista->mensajeError("El libro $id no se pudo insertar");
                 die();
         }
-
         else{
             $this->vista->mensajeError("No se especificaron los parametros");
             die();
@@ -95,7 +102,16 @@ class LibrosControlador{
     }
 
     function editarLibro($id_libro){
-        if(isset($_POST['titulo']) && isset($_POST['autor'])&& isset($_POST['genero']) && isset($_POST['paginas'])){
+       
+        if(
+            (isset($_POST['titulo'])   && !empty($_POST['titulo']))&&
+            (isset($_POST['autor'])   && !empty($_POST['autor'])) &&
+            (isset($_POST['genero'])  && !empty($_POST['genero']))&& 
+            (isset($_POST['paginas']) && !empty($_POST['paginas']))
+          ){   
+
+
+            
             $titulo = $_POST['titulo'];
             $autor = $_POST['autor'];
             $genero = $_POST['genero'];
@@ -112,6 +128,8 @@ class LibrosControlador{
                 return $this->vista->mensajeError("No existe esa categoria");
             } 
             
+        }else{
+            $this->vista->mensajeError("Debes completar los campos");
         }
         
     }

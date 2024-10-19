@@ -51,6 +51,7 @@ class LibrosModelo extends ModeloBase{
         
         $query = $this->db->prepare("UPDATE libros SET titulo = ?, autor = ?, paginas = ?, cover = ?, id_genero = ? WHERE id_libro = ?");
         try{
+            
             $query->execute([$titulo, $autor, intval($paginas), $cover, intval($id_genero), intval($id_libro)]);
             $validacion = $query->rowCount();
             return $validacion;

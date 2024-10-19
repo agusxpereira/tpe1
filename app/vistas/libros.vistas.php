@@ -28,8 +28,8 @@ class LibrosVista{
         return require_once("./plantillas/libros/formularioEditar.phtml");
     }
     public function mensajeError($mensaje = 'No se pudo inicializar la base de datos'){
-        var_dump($mensaje);
-        require_once("./plantillas/libros/mensajeError.phtml");
+        
+        require_once("./plantillas/error/error.phtml");
     }
 
 }
