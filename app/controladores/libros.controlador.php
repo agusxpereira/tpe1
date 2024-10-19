@@ -82,7 +82,7 @@ class LibrosControlador{
             
             $cover = empty($_POST['cover']) ? null :  $_POST['cover'];
             
-            $genero_id = $_POST['genero'];//$this->modeloGeneros->obtenerIdPorNombreGenero($genero);
+            $genero_id = $this->modeloGeneros->obtenerIdPorNombreGenero($genero);
             
             
             
@@ -128,7 +128,6 @@ class LibrosControlador{
             $cover = $_POST['cover'];
             
             $id_genero = $this->modeloGeneros->obtenerIdPorNombreGenero($genero);
-
             $id = $this->modeloLibros->editarLibro($titulo, $autor, $id_genero, $paginas, $cover, intval($id_libro));       
             
             if ($id >= 0){  
