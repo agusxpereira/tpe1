@@ -60,7 +60,7 @@ switch ($params[0]) {
         verifyAuthMiddleware($res);
 
         $controlador = new LibrosControlador($res);
-        if ($params[1] && !empty($params[1])) {
+        if ($params[1] && is_numeric($params[1])) {
             $id_libro = $params[1];
             $controlador->mostrarEditar($id_libro);
         }else{
@@ -88,27 +88,26 @@ switch ($params[0]) {
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
         $controlador = new LibrosControlador($res);
-        if (isset($params[1])) {
+        if (isset($params[1]) && is_numeric($params[1])) {
             $id_libro = intval($params[1]);
             $controlador->eliminarLibro($id_libro);
         }else{
             
             $controladorError = new ControladorError($res);
-            $this->controladorError->mostrarError("No había ningún libro seleccionado");
+            $controladorError->mostrarError("No había ningún libro seleccionado");
         }
         break;
     case 'libros':
         sessionAuthMiddleware($res);
-        //verifyAuthMiddleware($res);
+        verifyAuthMiddleware($res);
         
         
-        if (isset($params[1]) && !empty($params[1])) {
+        if (isset($params[1]) && is_numeric($params[1])) {
             $id = $params[1];
             $controlador = new LibrosControlador($res); // $res
             $controlador->detalleLibro($id);
         } else {
             $controlador = new LibrosControlador($res); // $res
-              
             $controlador->listarLibros();
         }
         break;
