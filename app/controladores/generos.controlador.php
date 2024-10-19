@@ -2,22 +2,24 @@
 require_once './app/modelos/generos.modelo.php';
 require_once './app/vistas/generos.vista.php';
 require_once("./app/modelos/libros.modelo.php");
+require_once("./app/controladores/error.controlador.php");
 class GenerosControlador
 {
     private $modeloGeneros;
     private $modeloLibros;
+    private $controladorError;
 
     private $vista;
     //Revisado
     public function __construct($res)
     {
-
+        $this->controladorError = new ControladorError($res); 
         $this->vista = new GenerosVista($res->user);
         try {
             $this->modeloLibros = new LibrosModelo();
             $this->modeloGeneros = new GenerosModelo();
         } catch (PDOException $e) {
-            $this->vista->mostrarError("No se pudo conectar a la base de datos");
+            $this->controladorError->mostrarError("No se pudo conectar a la base de datos");
             die();
         }
     }
@@ -38,7 +40,7 @@ class GenerosControlador
             $libros = $this->modeloLibros->obtenerLibrosPorGenero($id);
             return $this->vista->detalleGenero($genero, $libros);
         }
-        return $this->vista->mostrarError("No se ha encontrado el genero con id : $id");
+        return $this->controladorError->mostrarError("No se ha encontrado el genero con id : $id");
     }
 
     //agregar
@@ -51,7 +53,7 @@ class GenerosControlador
     public function agregarGenero()
     {
         if (!isset($_POST['nombre']) || empty($_POST['nombre'])) {
-            return $this->vista->mostrarError('Falta completar el título');
+            return $this->controladorError->mostrarError('Falta completar el título');
         }
         $ruta = (isset($_FILES['foto']) && !empty($_FILES['foto']['name'])) ? $this->procesarImagen() : null;
 
@@ -66,7 +68,7 @@ class GenerosControlador
         else
         {
             unlink($ruta_imagen);
-            return $this->vista->mostrarError("El genero $nombre no se pudo insertar. Es posible que ya exista un genero con el mismo nombre.");
+            return $this->controladorError->mostrarError("El genero $nombre no se pudo insertar. Es posible que ya exista un genero con el mismo nombre.");
         }
     }
     //procesamiento de imagen
@@ -93,12 +95,12 @@ class GenerosControlador
         // obtengo el género por id
         $genero = $this->modeloGeneros->obtenerGeneroPorId($id);
         if (!$genero) {
-            return $this->vista->mostrarError("No existe el género con el id=$id");
+            return $this->controladorError->mostrarError("No existe el género con el id=$id");
         }
         //si existe reviso si tiene alguna relacion.
         $libros = $this->modeloLibros->obtenerLibrosPorGenero($id);
         if (!empty($libros)) {
-            return $this->vista->mostrarError("No se pudo borrar el genero $genero->nombre por que tiene elementos relacionados.");
+            return $this->controladorError->mostrarError("No se pudo borrar el genero $genero->nombre por que tiene elementos relacionados.");
         } else {
             try {
                 // borro el género y redirijo
@@ -106,7 +108,7 @@ class GenerosControlador
                 unlink($genero->ruta_imagen);
                 return  header('Location: ' . BASE_URL . "generos");
             } catch (PDOException $e) {
-                return $this->vista->mostrarError("No se pudo borrar el genero $genero->nombre.");
+                return $this->controladorError->mostrarError("No se pudo borrar el genero $genero->nombre.");
             }
         }
     }
@@ -117,7 +119,7 @@ class GenerosControlador
         $genero = $this->modeloGeneros->obtenerGeneroPorId(intval($id));
 
         if (!$genero) {
-            return $this->vista->mostrarError("No existe el género con el id=$id");
+            return $this->controladorError->mostrarError("No existe el género con el id=$id");
         }
 
         // muestra el género
@@ -130,7 +132,7 @@ class GenerosControlador
         //verifico si existe
         $genero = $this->modeloGeneros->obtenerGeneroPorId(intval($id));
         if (!$genero) {
-            return $this->vista->mostrarError("No existe el género con el id=$id");
+            return $this->controladorError->mostrarError("No existe el género con el id=$id");
         }
         //Proceso imagen en caso de ser necesario
         $ruta = $genero->ruta_imagen;
@@ -150,7 +152,7 @@ class GenerosControlador
             }
             return  header('Location: ' . BASE_URL . "generos/$id");
         } catch (PDOException $e) {
-            return $this->vista->mostrarError("No se pudo editar el genero $genero->nombre.");
+            return $this->controladorError->mostrarError("No se pudo editar el genero $genero->nombre.");
         }
     }
 }

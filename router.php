@@ -66,7 +66,7 @@ switch ($params[0]) {
         }else{
             
             $controladorError = new ControladorError($res);
-            $controladorError->mostrarError("No había ningun libro seleccionado para editar");
+            $controladorError->mostrarError("No había ningún libro seleccionado para editar");
         }
 
         break;
@@ -81,7 +81,7 @@ switch ($params[0]) {
         }
         else{      
             $controladorError = new ControladorError($res);
-            $controladorError->mostrarError("No se puede");
+            $controladorError->mostrarError("No se puede editar");
         }
         break;
     case 'eliminarLibro':
@@ -99,9 +99,6 @@ switch ($params[0]) {
         break;
     case 'libros':
         sessionAuthMiddleware($res);
-        verifyAuthMiddleware($res);
-        
-        
         if (isset($params[1]) && is_numeric($params[1])) {
             $id = $params[1];
             $controlador = new LibrosControlador($res); // $res
@@ -117,37 +114,60 @@ switch ($params[0]) {
         }
         break;
 
-        //Generos
+      // Géneros
     case 'agregarGenero':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
-        $controller = new GenerosControlador($res);
-        $controller->mostrarFormularioCarga();
+        $controlador = new GenerosControlador($res);
+        $controlador->mostrarFormularioCarga();
         break;
     case 'nuevoGenero':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
-        $controller = new GenerosControlador($res);
-        $controller->agregarGenero();
+        $controlador = new GenerosControlador($res);
+        $controlador->agregarGenero();
         break;
     case 'datosGenero':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
-        $controller = new GenerosControlador($res);
-        $controller->datosGenero($params[1]);
+        $controlador = new GenerosControlador($res);
+        if (isset($params[1])) {
+            $controlador->datosGenero($params[1]);
+        } else {
+            $controladorError = new ControladorError($res);
+            $controladorError->mostrarError("No había ningún género seleccionado");
+        }
         break;
     case 'editarGenero':
-        $controller = new GenerosControlador($res);
-        $controller->editarGenero($params[1]);
+        sessionAuthMiddleware($res);
+        verifyAuthMiddleware($res);
+        $controlador = new GenerosControlador($res);
+        if (isset($params[1])) {
+            $controlador->editarGenero($params[1]);
+        } else {
+            $controladorError = new ControladorError($res);
+            $controladorError->mostrarError("No había ningún género seleccionado");
+        }
         break;
     case 'eliminarGenero':
-        $controller = new GenerosControlador($res);
-        $controller->eliminarGenero($params[1]);
+        sessionAuthMiddleware($res);
+        verifyAuthMiddleware($res);
+        $controlador = new GenerosControlador($res);
+        if (isset($params[1])) {
+            $controlador->eliminarGenero($params[1]);
+        } else {
+            $controladorError = new ControladorError($res);
+            $controladorError->mostrarError("No había ningún género seleccionado");
+        }
         break;
-    case "generos":
+
+    case 'generos':
         sessionAuthMiddleware($res);
         $controlador = new GenerosControlador($res);
-        if (isset($params[1]) && !empty($params[1])) {
+        if (isset($params[1]) && !is_numeric($params[1])) {
+            $controladorError = new ControladorError($res);
+            $controladorError->mostrarError("No existe el género");
+        } else if (isset($params[1]) && !empty($params[1])) {
             $controlador->mostrarGenero($params[1]);
         } else {
             $controlador->mostrarGeneros();
@@ -155,7 +175,7 @@ switch ($params[0]) {
         break;
     default:
         $controladorError = new ControladorError($res);
-        $this->controladorError->mostrarError("No existe esa página");
+        $controladorError->mostrarError("No existe la página");
         //errores de parametros por ejemplo si se quiere editar un libro que no existe o no tiene parametros
         break;
 }
