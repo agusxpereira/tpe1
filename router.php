@@ -106,7 +106,12 @@ switch ($params[0]) {
             $id = $params[1];
             $controlador = new LibrosControlador($res); // $res
             $controlador->detalleLibro($id);
-        } else {
+        }else if(isset($params[1]) && !is_numeric($params[1])){
+            $controladorError = new ControladorError($res);
+            $controladorError->mostrarError("No había ningún libro seleccionado");
+        } 
+        
+        else  {
             $controlador = new LibrosControlador($res); // $res
             $controlador->listarLibros();
         }
