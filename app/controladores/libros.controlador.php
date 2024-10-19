@@ -31,24 +31,26 @@ class LibrosControlador{
     
     function listarLibros(){
         
-        $libros = $this->modelo->getLibros();
+        $libros = $this->modeloLibros->getLibros();
         
         $this->vista->showLibros($libros);
         return;
     }
 
+    /*    
+    
+    */
+
     function detalleLibro($id){
-        $libro = $this->modelo->getLibroById($id);
-        $nombreGenero = $this->modelo->obtenerNombreGenero($libro->id_genero);
+        $libro = $this->modeloLibros->getLibroById($id);
+        //$nombreGenero = $this->modeloGeneros->obtenerNombreGenero($libro->id_genero);
+        /*buscar esta funcion y pasarsela a Seba */
         $this->vista->showDetail($libro, $nombreGenero);
         return;
     }
 
     function mostrarAgregar($mensaje = null){
-        $listaGeneros = $this->modelo->obtenerGeneros();
-        foreach ($listaGeneros as $key) {
-            var_dump($key->nombre);
-        }
+        $listaGeneros = $this->modeloGeneros->obtenerGeneros();
         
         $this->vista->mostrarAgregar($mensaje, $listaGeneros);
         
@@ -62,7 +64,17 @@ class LibrosControlador{
             $genero = $_POST['genero'];
             $paginas = intval($_POST['paginas']);
             $cover = empty($_POST['cover']) ? null :  $_POST['cover'];
-            $id = $this->modelo->agregarLibro($titulo, $autor, $genero, $paginas, $cover);
+            
+            $genero_id = $this->modeloGeneros->obtenerId($genero);
+            
+            
+            
+            $id = $this->modeloLibros->agregarLibro($titulo, $autor, $genero_id, $paginas, $cover);
+
+
+
+
+
             if ($id>0)
                 return $this->mostrarAgregar("El libro $id se insertó con éxito");
             else
@@ -71,15 +83,16 @@ class LibrosControlador{
         }
 
         else{
-            $this->mostrarAgregar("No se especificaron los parametros");
+            $this->vista->mensajeError("No se especificaron los parametros");
             die();
         }
 
     }
 
     function mostrarEditar($id_libro){
-        $listaGeneros = $this->modelo->obtenerGeneros();
-        $libro = $this->modelo->getLibroById($id_libro);
+        $listaGeneros = $this->modeloGeneros->obtenerGeneros();
+        /* buscar esta funcion también */
+        $libro = $this->modeloLibros->getLibroById($id_libro);
         $this->vista->mostrarFormEditar('', $libro, $listaGeneros);
     }
 
@@ -91,9 +104,9 @@ class LibrosControlador{
             $paginas = intval($_POST['paginas']);
             $cover = $_POST['cover'];
             
-            
-            
-            $id = $this->modelo->editarLibro($titulo, $autor, $genero, $paginas, $cover, intval($id_libro));       
+            $id_genero = $this->modeloGeneros->obtenerId($genero);
+
+            $id = $this->modeloLibros->editarLibro($titulo, $autor, $id_genero, $paginas, $cover, intval($id_libro));       
             
             if ($id >= 0){  
                header("Location:" . BASE_URL);
@@ -107,7 +120,7 @@ class LibrosControlador{
 
     public function eliminarLibro($id_libro){
         
-        $validacion = $this->modelo->eliminarLibro($id_libro);
+        $validacion = $this->modeloLibros->eliminarLibro($id_libro);
         if($validacion > 0){
             header("Location:" . BASE_URL);
         }else{
