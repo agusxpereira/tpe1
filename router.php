@@ -3,6 +3,7 @@ require_once './libs/response.php';
 require_once './app/middlewares/session.auth.middleware.php';
 require_once './app/middlewares/verify.auth.middleware.php';
 require_once 'app/controladores/libros.controlador.php';
+require_once("./app/controladores/error.controlador.php");
 require_once 'app/controladores/generos.controlador.php';
 require_once 'app/controladores/auth.controlador.php';
 //conrtroladores Cateogira
@@ -10,7 +11,7 @@ define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'
 
 
 if (isset($_GET['action']) && !empty($_GET['action'])) {
-    $action = $_GET['action'];
+    $action = $_GET['action']; 
 } else {
     $action = 'libros';
 }
@@ -24,8 +25,8 @@ switch ($params[0]) {
         $controller->showLogin();
         break;
     case 'login':
-        $controller = new AuthController($res);
-        $controller->login();
+        $controlador = new AuthController($res);
+        $controlador->login();
         break;
     case 'validar':
         $controlador = new AuthController($res);
@@ -58,38 +59,52 @@ switch ($params[0]) {
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
 
-        $controller = new LibrosControlador($res);
+        $controlador = new LibrosControlador($res);
         if (isset($params[1])) {
             $id_libro = $params[1];
-            $controller->mostrarEditar($id_libro);
+            $controlador->mostrarEditar($id_libro);
+        }else{
+            $controladorError = new ControladorError();
+            $this->controladorError->mostrarError("No había ningun libro seleccionado");
         }
 
         break;
     case 'validarEditar':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
-        $controller = new LibrosControlador($res);
-        if ($params[1])
-            $controller->editarLibro($params[1]);
-
+        $controlador = new LibrosControlador($res);
+        if (isset($params[1]) && !empty($params[1]))
+        
+        $controlador->editarLibro($params[1]);
+        
+        else{      
+            $controladorError = new ControladorError();
+            $controladorError->mostrarError("No se puede");
+        }
         break;
     case 'eliminarLibro':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
-        $controller = new LibrosControlador($res);
+        $controlador = new LibrosControlador($res);
         if (isset($params[1])) {
             $id_libro = intval($params[1]);
-            $controller->eliminarLibro($id_libro);
+            $controlador->eliminarLibro($id_libro);
+        }else{
+            
+            $controladorError = new ControladorError();
+            $this->controladorError->mostrarError("No había ningún libro seleccionado");
         }
         break;
     case 'libros':
         sessionAuthMiddleware($res);
         //verifyAuthMiddleware($res);
-        if (isset($params[1])) {
+        
+        if (isset($params[1]) && !empty($params[1])) {
             $id = $params[1];
             $controlador = new LibrosControlador($res); // $res
             $controlador->detalleLibro($id);
         } else {
+            
             $controlador = new LibrosControlador($res); // $res
             $controlador->listarLibros();
         }
@@ -132,6 +147,8 @@ switch ($params[0]) {
         }
         break;
     default:
-        # code...
+        $controladorError = new ControladorError();
+        $this->controladorError->mostrarError("No existe esa página");
+        //errores de parametros por ejemplo si se quiere editar un libro que no existe o no tiene parametros
         break;
 }

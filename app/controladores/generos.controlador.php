@@ -1,7 +1,7 @@
 <?php
 require_once './app/modelos/generos.modelo.php';
 require_once './app/vistas/generos.vista.php';
-
+require_once("./app/modelos/libros.modelo.php");
 class GenerosControlador
 {
     private $modeloGeneros;
