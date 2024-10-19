@@ -5,7 +5,9 @@ require_once("./app/vistas/libros.vistas.php");
 
 
 class LibrosControlador{
-    private $modelo;
+    private $modeloLibros;
+    private $modeloGeneros;
+
 
     private $vista;
 
@@ -16,7 +18,8 @@ class LibrosControlador{
         //a la vista le pasamos el usuario que tenemos en response, si no existe es null
         
         try {
-            $this->modelo = new LibrosModelo();
+            $this->modeloLibros = new LibrosModelo();
+            $this->modeloGeneros = new GenerosModelo();
         }
         catch (PDOException $e){
             var_dump($e["message"]);
