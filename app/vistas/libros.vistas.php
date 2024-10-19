@@ -25,6 +25,8 @@ class LibrosVista{
     }
 
     function mostrarFormEditar($mensaje=null, $libro, $listaGeneros){
+        var_dump($listaGeneros);
+       
         return require_once("./plantillas/libros/formularioEditar.phtml");
     }
     public function mostrarError($mensaje = 'No se pudo inicializar la base de datos'){
