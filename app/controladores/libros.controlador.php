@@ -22,8 +22,7 @@ class LibrosControlador{
             $this->modeloGeneros = new GenerosModelo();
         }
         catch (PDOException $e){
-            var_dump($e["message"]);
-            $this->vista->mensajeError("No se pudo conectar a la base de datos; error $e");
+            $this->vista->mostrarError("No se pudo conectar a la base de datos.");
             die();
         }
         }
@@ -31,22 +30,32 @@ class LibrosControlador{
     
     function listarLibros(){
         
-        $libros = $this->modeloLibros->getLibros();
+        $libros = $this->modeloLibros->obtenerLibros();
         
-        $this->vista->showLibros($libros);
+        $this->vista->mostrarLibros($libros);
         return;
     }
 
-    /*    
+    function detalleLibro($id) {
+        $libro = $this->modeloLibros->obtenerLibroPorId($id);
     
-    */
-
-    function detalleLibro($id){
-        $libro = $this->modeloLibros->getLibroById($id);
-        $nombreGenero = $this->modeloGeneros->obtenerGenero($libro->id_genero);
-        
-        $this->vista->showDetail($libro, $nombreGenero->nombre);
-        return;
+        // Verifica si el libro existe
+        if (!$libro) {
+            // Maneja el caso en que no se encuentra el libro
+            $this->vista->mostrarError("El libro no fue encontrado.");
+            return;
+        }
+    
+        $nombreGenero = $this->modeloGeneros->obtenerGeneroPorId($libro->id_genero);
+    
+        // Verifica si el género existe
+        if (!$nombreGenero) {
+            // Maneja el caso en que no se encuentra el género
+            $this->vista->mostrarError("El género no fue encontrado.");
+            return;
+        }
+    
+        $this->vista->mostrarDetalles($libro, $nombreGenero->nombre);
     }
 
     function mostrarAgregar($mensaje = null){
@@ -73,7 +82,7 @@ class LibrosControlador{
             
             $cover = empty($_POST['cover']) ? null :  $_POST['cover'];
             
-            $genero_id = $this->modeloGeneros->obtenerId($genero);
+            $genero_id = $_POST['genero'];//$this->modeloGeneros->obtenerIdPorNombreGenero($genero);
             
             
             
@@ -84,20 +93,20 @@ class LibrosControlador{
             if ($id>0)
                 return $this->mostrarAgregar("El libro $id se insertó con éxito");
             else
-                return $this->vista->mensajeError("El libro $id no se pudo insertar");
-                die();
+                return $this->vista->mostrarError("El libro $id no se pudo insertar");
         }
         else{
-            $this->vista->mensajeError("No se especificaron los parametros");
+            $this->vista->mostrarError("No se especificaron los parametros");
             die();
         }
 
     }
 
     function mostrarEditar($id_libro){
-        $listaGeneros = $this->modeloGeneros->obtenerGeneros();
         
-        $libro = $this->modeloLibros->getLibroById($id_libro);
+        $libro = $this->modeloLibros->obtenerLibroPorId($id_libro);
+        $listaGeneros = $this->modeloGeneros->obtenerGeneros();
+
         $this->vista->mostrarFormEditar('', $libro, $listaGeneros);
     }
 
@@ -118,18 +127,18 @@ class LibrosControlador{
             $paginas = intval($_POST['paginas']);
             $cover = $_POST['cover'];
             
-            $id_genero = $this->modeloGeneros->obtenerId($genero);
+            $id_genero = $this->modeloGeneros->obtenerIdPorNombreGenero($genero);
 
             $id = $this->modeloLibros->editarLibro($titulo, $autor, $id_genero, $paginas, $cover, intval($id_libro));       
             
             if ($id >= 0){  
                header("Location:" . BASE_URL);
             }else if($id == -1){
-                return $this->vista->mensajeError("No existe esa categoria");
+                return $this->vista->mostrarError("No existe esa categoria");
             } 
             
         }else{
-            $this->vista->mensajeError("Debes completar los campos");
+            $this->vista->mostrarError("Debes completar los campos");
         }
         
     }
@@ -140,8 +149,7 @@ class LibrosControlador{
         if($validacion > 0){
             header("Location:" . BASE_URL);
         }else{
-            return $this->vista->mensajeError("No se pudo eliminar el libro");
-            die();
+            return $this->vista->mostrarError("No se pudo eliminar el libro");
         }
     
     }

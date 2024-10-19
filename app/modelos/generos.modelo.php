@@ -4,91 +4,64 @@ class GenerosModelo extends ModeloBase
 {
     public function obtenerGeneros()
     {
-
-        // 2. Ejecuto la consulta
-
-        $query = $this->db->prepare('SELECT * FROM generos');
-
-        $query->execute();
-
-        // 3. Obtengo los datos en un arreglo de objetos
-
-        $generos = $query->fetchAll(PDO::FETCH_OBJ);
-
+        $consulta = $this->db->prepare('SELECT * FROM generos');
+        $consulta->execute();
+        $generos = $consulta->fetchAll(PDO::FETCH_OBJ);
         return $generos;
     }
-
-    public function obtenerGenero($id)
+    public function obtenerIdPorNombreGenero($genero){
+       
+        $query = $this->db->prepare("SELECT id FROM generos WHERE nombre = ?");
+        $query->execute([$genero]);
+        $id = $query->fetchAll(PDO::FETCH_OBJ);
+         if($id != null){
+             return $id[0]->id;
+         }
+         else{
+             return -1;
+         }
+          
+     
+     }
+    public function obtenerGeneroPorId($id)
     {
-
-        $query = $this->db->prepare('SELECT * FROM generos WHERE id = ?');
-
-        $query->execute([$id]);
-
-        $generos = $query->fetch(PDO::FETCH_OBJ);
-
+        $consulta = $this->db->prepare('SELECT * FROM generos WHERE id = ?');
+        $consulta->execute([$id]);
+        $generos = $consulta->fetch(PDO::FETCH_OBJ);
         return $generos;
     }
-
-    public function obtenerLibros($id)
-    {
-
-        $query = $this->db->prepare('SELECT libros.id_libro ,libros.titulo from generos inner join libros on generos.id = libros.id_genero where  generos.id = ?');
-
-        $query->execute([$id]);
-
-        $libros = $query->fetchAll(PDO::FETCH_OBJ);
-
-        return $libros;
-    }
-
-    public function insertarGenero($nombre, $descripcion, $ruta_imagen)
+    //agregar
+    public function agregarGenero($nombre, $descripcion, $ruta_imagen)
     {
         try {
-            $query = $this->db->prepare('INSERT INTO generos(nombre, descripcion, Ruta_imagen) VALUES (?, ?, ?)');
-
-            $query->execute([$nombre, $descripcion, $ruta_imagen]);
-
+            $consulta = $this->db->prepare('INSERT INTO generos(nombre, descripcion, Ruta_imagen) VALUES (?, ?, ?)');
+            $consulta->execute([$nombre, $descripcion, $ruta_imagen]);
             $id = $this->db->lastInsertId();
-        } catch (Throwable $th) {
+        } catch (\Throwable $th) {
             $id = -1;
         }
-
         return $id;
     }
-
-
-    public function borrarGenero($id)
+    //editar
+    public function editarGenero($id, $nombre, $descripcion, $ruta_imagen)
     {
-    
-        $libros = $this->obtenerLibros($id);
+        $consulta = $this->db->prepare('UPDATE generos SET nombre= ? , descripcion=? , ruta_imagen = ? WHERE id = ?');
 
-        if (empty($libros)) {
-
-            $genero = $this->obtenerGenero($id);
-
-            $query = $this->db->prepare('DELETE FROM generos WHERE id = ?');
-
-            $query->execute([$id]);
-
-            if ($genero->Ruta_Imagen <> null) {
-
-                unlink($genero->Ruta_Imagen);
-            }
-
-            return true;
-        }
-
-        return false;
+        $consulta->execute([$nombre, $descripcion, $ruta_imagen, $id]);
+        return $consulta->rowCount();
     }
-
-    public function actualizarGenero($id, $nombre, $descripcion, $ruta_imagen)
+   //Eliminar
+    public function eliminarGenero($id)
     {
 
-        echo "ENTREE";
+            $genero = $this->obtenerGeneroPorId($id);
 
-        $query = $this->db->prepare('UPDATE generos SET nombre= ? , descripcion=? , ruta_imagen = ? WHERE id = ?');
+            $consulta = $this->db->prepare('DELETE FROM generos WHERE id = ?');
 
-        $query->execute([$nombre, $descripcion, $ruta_imagen, $id]);
+            $consulta->execute([$id]);
+            return $consulta->rowCount();
+
     }
+
+
 }

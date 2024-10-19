@@ -120,7 +120,7 @@ switch ($params[0]) {
         break;
     case 'eliminarGenero':
         $controller = new GenerosControlador($res);
-        $controller->borrarGenero($params[1]);
+        $controller->eliminarGenero($params[1]);
         break;
     case "generos":
         sessionAuthMiddleware($res);

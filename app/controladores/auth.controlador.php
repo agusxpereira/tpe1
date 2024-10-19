@@ -8,9 +8,14 @@ class AuthController {
     private $vista;
 
     function __construct($res){
-        $this->modelo = new UserModelo();
         $this->vista = new AuthVista($res->user);
-       
+        try {
+        $this->modelo = new UserModelo();
+        }
+        catch (PDOException $e){
+            $this->vista->mensajeError("No se pudo conectar a la base de datos.");
+            die();
+        }
         
     }
 

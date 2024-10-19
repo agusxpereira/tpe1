@@ -9,14 +9,14 @@ class LibrosVista{
     }
 
 
-    function showLibros($libros){
+    function mostrarLibros($libros){
         
         require_once("./plantillas/libros/libros.phtml");
 
     }
 
 
-    function showDetail($libro, $genero){
+    function mostrarDetalles($libro, $genero){
         require_once("./plantillas/libros/libro_detail.phtml");
     }
 
@@ -27,7 +27,7 @@ class LibrosVista{
     function mostrarFormEditar($mensaje=null, $libro, $listaGeneros){
         return require_once("./plantillas/libros/formularioEditar.phtml");
     }
-    public function mensajeError($mensaje = 'No se pudo inicializar la base de datos'){
+    public function mostrarError($mensaje = 'No se pudo inicializar la base de datos'){
         
         require_once("./plantillas/error/error.phtml");
     }

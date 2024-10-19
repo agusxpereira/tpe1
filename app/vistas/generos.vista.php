@@ -8,7 +8,7 @@ class generosVista {
     }
     public function mostrarGeneros($generos) {
         // la vista define una nueva variable con la cantida de generos
-        $count = count($generos);
+        $count = is_array($generos) ? count($generos) : 0;
 
         // NOTA: el template va a poder acceder a todas las variables y constantes que tienen alcance en esta funcion
         require 'plantillas/generos/lista_generos.phtml';
@@ -16,7 +16,7 @@ class generosVista {
 
     public function detalleGenero($genero,$libros) {
         // la vista define una nueva variable con la cantida de generos
-        $count = count($libros);
+        $count = is_array($libros) ? count($libros) : 0;
 
         // NOTA: el template va a poder acceder a todas las variables y constantes que tienen alcance en esta funcion
         require 'plantillas/generos/detalle_genero.phtml';
@@ -27,8 +27,7 @@ class generosVista {
     }
 
     public function mostrarFormularioCarga($genero){
-         require 'plantillas/layout/header.phtml' ;
-
+        require 'plantillas/layout/header.phtml' ;
         require 'plantillas/generos/form_alta_genero.phtml';}
 
 
