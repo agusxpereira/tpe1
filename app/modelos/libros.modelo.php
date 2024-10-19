@@ -68,4 +68,17 @@ class LibrosModelo extends ModeloBase{
         return $validacion;
     
     }
+
+
+    public function obtenerLibros($id)
+    {
+
+        $query = $this->db->prepare('SELECT libros.id_libro ,libros.titulo from generos inner join libros on generos.id = libros.id_genero where  generos.id = ?');
+
+        $query->execute([$id]);
+
+        $libros = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $libros;
+    }
 }

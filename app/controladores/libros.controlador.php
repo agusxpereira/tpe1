@@ -43,9 +43,9 @@ class LibrosControlador{
 
     function detalleLibro($id){
         $libro = $this->modeloLibros->getLibroById($id);
-        //$nombreGenero = $this->modeloGeneros->obtenerNombreGenero($libro->id_genero);
-        /*buscar esta funcion y pasarsela a Seba */
-        $this->vista->showDetail($libro, $nombreGenero);
+        $nombreGenero = $this->modeloGeneros->obtenerGenero($libro->id_genero);
+        
+        $this->vista->showDetail($libro, $nombreGenero->nombre);
         return;
     }
 
@@ -73,8 +73,6 @@ class LibrosControlador{
 
 
 
-
-
             if ($id>0)
                 return $this->mostrarAgregar("El libro $id se insertó con éxito");
             else
@@ -91,7 +89,7 @@ class LibrosControlador{
 
     function mostrarEditar($id_libro){
         $listaGeneros = $this->modeloGeneros->obtenerGeneros();
-        /* buscar esta funcion también */
+        
         $libro = $this->modeloLibros->getLibroById($id_libro);
         $this->vista->mostrarFormEditar('', $libro, $listaGeneros);
     }
