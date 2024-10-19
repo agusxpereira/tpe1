@@ -15,7 +15,7 @@ class LibrosControlador{
 
     public function __construct($res)
     {
-        $this->controladorError = new ControladorError(); 
+        $this->controladorError = new ControladorError($res); 
         $this->vista = new LibrosVista($res->user);
         //a la vista le pasamos el usuario que tenemos en response, si no existe es null
         

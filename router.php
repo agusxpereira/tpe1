@@ -60,12 +60,13 @@ switch ($params[0]) {
         verifyAuthMiddleware($res);
 
         $controlador = new LibrosControlador($res);
-        if (isset($params[1])) {
+        if ($params[1] && !empty($params[1])) {
             $id_libro = $params[1];
             $controlador->mostrarEditar($id_libro);
         }else{
-            $controladorError = new ControladorError();
-            $this->controladorError->mostrarError("No había ningun libro seleccionado");
+            
+            $controladorError = new ControladorError($res);
+            $controladorError->mostrarError("No había ningun libro seleccionado para editar");
         }
 
         break;
@@ -73,12 +74,13 @@ switch ($params[0]) {
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);
         $controlador = new LibrosControlador($res);
-        if (isset($params[1]) && !empty($params[1]))
-        
-        $controlador->editarLibro($params[1]);
-        
+        if ($params[1] && !empty($params[1])){
+
+            
+            $controlador->editarLibro($params[1]);
+        }
         else{      
-            $controladorError = new ControladorError();
+            $controladorError = new ControladorError($res);
             $controladorError->mostrarError("No se puede");
         }
         break;
@@ -91,7 +93,7 @@ switch ($params[0]) {
             $controlador->eliminarLibro($id_libro);
         }else{
             
-            $controladorError = new ControladorError();
+            $controladorError = new ControladorError($res);
             $this->controladorError->mostrarError("No había ningún libro seleccionado");
         }
         break;
@@ -99,13 +101,14 @@ switch ($params[0]) {
         sessionAuthMiddleware($res);
         //verifyAuthMiddleware($res);
         
+        
         if (isset($params[1]) && !empty($params[1])) {
             $id = $params[1];
             $controlador = new LibrosControlador($res); // $res
             $controlador->detalleLibro($id);
         } else {
-            
             $controlador = new LibrosControlador($res); // $res
+              
             $controlador->listarLibros();
         }
         break;
@@ -147,7 +150,7 @@ switch ($params[0]) {
         }
         break;
     default:
-        $controladorError = new ControladorError();
+        $controladorError = new ControladorError($res);
         $this->controladorError->mostrarError("No existe esa página");
         //errores de parametros por ejemplo si se quiere editar un libro que no existe o no tiene parametros
         break;
