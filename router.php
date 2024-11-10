@@ -121,6 +121,17 @@ switch ($params[0]) {
         $controlador = new GenerosControlador($res);
         $controlador->mostrarFormularioCarga();
         break;
+    case 'activarGenero':
+            sessionAuthMiddleware($res);
+            verifyAuthMiddleware($res); 
+            $controlador = new GenerosControlador($res);
+            if (isset($params[1])) {
+                $controlador->activarGenero($params[1]);
+            } else {
+                $controladorError = new ControladorError($res);
+                $controladorError->mostrarError("No había ningún género seleccionado");
+            }
+            break;
     case 'nuevoGenero':
         sessionAuthMiddleware($res);
         verifyAuthMiddleware($res);

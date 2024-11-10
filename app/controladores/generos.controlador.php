@@ -155,4 +155,23 @@ class GenerosControlador
             return $this->controladorError->mostrarError("No se pudo editar el genero $genero->nombre.");
         }
     }
+    public function activarGenero($id)
+    {
+        //verifico si existe
+        $genero = $this->modeloGeneros->obtenerGeneroPorId(intval($id));
+        if (!$genero) {
+            return $this->controladorError->mostrarError("No existe el género con el id=$id");
+        }
+
+        try {
+            // edito el género y redirijo
+            if (!$genero->activo) $this->modeloGeneros->activarGenero($id,1);
+            else $this->modeloGeneros->activarGenero($id,0);
+            return  header('Location: ' . BASE_URL . "generos/$id");
+        } catch (PDOException $e) {
+            return $this->controladorError->mostrarError("No se pudo activar el genero $genero->nombre.");
+        }
+    }
 }
+
+

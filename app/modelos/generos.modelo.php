@@ -32,7 +32,8 @@ class GenerosModelo extends ModeloBase
     }
     //agregar
     public function agregarGenero($nombre, $descripcion, $ruta_imagen)
-    {
+    {//con default true deberia tener en cuenta siempre el activo y la fecha
+        //Por defecto se crea activo
         try {
             $consulta = $this->db->prepare('INSERT INTO generos(nombre, descripcion, Ruta_imagen) VALUES (?, ?, ?)');
             $consulta->execute([$nombre, $descripcion, $ruta_imagen]);
@@ -43,11 +44,18 @@ class GenerosModelo extends ModeloBase
         return $id;
     }
     //editar
-    public function editarGenero($id, $nombre, $descripcion, $ruta_imagen)
+    public function editarGenero($id, $nombre, $descripcion, $ruta_imagen,$activo)
     {
-        $consulta = $this->db->prepare('UPDATE generos SET nombre= ? , descripcion=? , ruta_imagen = ? WHERE id = ?');
+        $consulta = $this->db->prepare('UPDATE generos SET nombre= ? , descripcion=? , ruta_imagen = ?, activo = ? WHERE id = ?');
 
-        $consulta->execute([$nombre, $descripcion, $ruta_imagen, $id]);
+        $consulta->execute([$nombre, $descripcion, $ruta_imagen,$activo, $id]);
+        return $consulta->rowCount();
+    }
+    public function activarGenero($id, $activo)
+    {
+        $consulta = $this->db->prepare('UPDATE generos SET activo = ? WHERE id = ?');
+
+        $consulta->execute([$activo, $id]);
         return $consulta->rowCount();
     }
    //Eliminar
