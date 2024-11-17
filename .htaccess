@@ -1,10 +1,11 @@
 <IfModule mod_rewrite.c>
-	RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteEngine On
 
+    # Evita la redirección infinita para router.php
+    RewriteCond %{REQUEST_URI} !^/router.php$
 
-    RewriteRule \.(?:css|js|jpe?g|gif|png)$ - [L]
+    # Redirige todas las rutas que no son archivos o directorios existentes hacia router.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ router.php?action=$1 [QSA,L]
-    
 </IfModule>

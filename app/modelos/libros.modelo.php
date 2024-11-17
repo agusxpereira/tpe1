@@ -28,13 +28,13 @@ class LibrosModelo extends ModeloBase
     }
 
     //agregar
-    public function agregarLibro($titulo, $autor, $genero_id, $paginas, $cover)
+    public function agregarLibro($titulo, $autor, $genero_id, $paginas, $cover, $precio)
     {
         $id = 0;
         try {
 
-            $consulta = $this->db->prepare('INSERT INTO libros(titulo, autor, paginas, cover, id_genero) VALUES (?,?,?,?,?)');
-            $consulta->execute([$titulo, $autor, $paginas, $cover, $genero_id]);
+            $consulta = $this->db->prepare('INSERT INTO libros(titulo, autor, paginas, cover, id_genero, precio) VALUES (?,?,?,?,?, ?)');
+            $consulta->execute([$titulo, $autor, $paginas, $cover, $genero_id, 100]);
             $id = $this->db->lastInsertId();
         } catch (\Throwable $th) {
             $id = -1;
